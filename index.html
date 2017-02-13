@@ -516,36 +516,15 @@
 
       
         
-          
-            <p>最近在研究Android视频播放功能，网上有很多关于视频播放解码的库，但是作为程序员的我，还是希望能从源头出发，学习FFMPGE自然是势在必行了。</p>
+          <p>最近在研究Android视频播放功能，网上有很多关于视频播放解码的库，但是作为程序员的我，还是希望能从源头出发，学习FFMPGE自然是势在必行了。</p>
 <p>网上有关FFMPGE学习的文章有很多，但是对于初学者而言，看的时候似乎总有一点不知所以然感觉，本人也是其中一个。再此，作为一个初学者，我们需要按着怎样的步骤来学习FFPEG呢？本系列文章就来一起记录一下，初学者探索FFMPEG的历程，一点一滴的走向通往大神之路。</p>
-<p>本片文章，我的计划是这样的，</p>
-<blockquote>
-<ol>
-<li>编译出<code>ffmpeg</code>可以为Android使用动态链接库</li>
-<li>Android studio建立jni工程使用动态链接库</li>
-<li>使用动态链接库实现一个简单的视频播放</li>
-</ol>
-</blockquote>
-<p>在做上面的功能的时候，作为初学者，我们需要有的基础知识是：linux基本功，C语言的基本功，JNI的基本功，Android的基本功，我相信，本篇文章的人，这些基本功，大多数都已经具备了。</p>
-<p>在完成上面的功能的时候，如果你从未接触过ffmeg,或者对linux不熟悉，也不同担心，你完全可以不求甚解的按着我的步骤一步一步的进行下去，我们的目的是先把效果实现，然后在对每一个功能过程逐步展开，到那时，你就会发现自己的不足，在恶补也不迟，正如我们学一门语言的时候，总要先搞一个<code>hello world</code>，这案例就是我们的<code>hello wrold</code>.</p>
-<p>好了闲话不多扯了，先完成第一个<br>准备材料：</p>
-<blockquote>
-<ol>
-<li>Ubuntu ，我这里用的是16.04</li>
-<li>VMware 12.0,如果你的电脑装的就是Ubuntu这个就可以不用了，这里我使用的是虚拟机安装的。</li>
-<li>NDK linux 版本，这里我用的是ndk-r13;</li>
-<li>下载ffmpeg ，这里我下载的是最新的版本，你根据自己的选择就行了</li>
-</ol>
-</blockquote>
-<p>有了以上的材料，我们的工作就是，在Ubuntu上配置NDK，至于如何配置呢？很简单。打开终端输入一下命令<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo gedit /etc/profile</div></pre></td></tr></table></figure></p>
-<p>然后在文件中配置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">export NDK_HOME=/home/sivin/programs/android-ndk-r13 //这里替换成你的ndk存放路径</div><div class="line">export PATH=$NDK_HOME=:$PATH</div></pre></td></tr></table></figure></p>
-<p>下载<code>ffmpeg</code>,这个我们可以直接在搜索引擎上搜索<code>ffmpeg</code>，进入官网里面提供了很多版本的下载，这里我们使用的是<code>linux</code>下<code>git</code>的方式，当然你也可以下载压缩包，然后解压也行，个人喜好。</p>
-<p>下面的工作就是编译<code>ffmpeg</code>了，我们在<code>ffmepg</code>的根目录下，新建<code>build_android.sh</code><br>然后在文件中写入：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">#!/bin/bash</div><div class="line">make clean</div><div class="line">export NDK=你的NDK路径</div><div class="line">export SYSROOT=$NDK/platforms/android-9/arch-arm/</div><div class="line">export TOOLCHAIN=$NDK/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64</div><div class="line">export CPU=arm</div><div class="line">export PREFIX=$(pwd)/android/$CPU</div><div class="line">export ADDI_CFLAGS=&quot;-marm&quot;</div><div class="line"></div><div class="line">./configure --target-os=linux \</div><div class="line">--prefix=$PREFIX --arch=arm \</div><div class="line">--disable-doc \</div><div class="line">--enable-shared \</div><div class="line">--disable-static \</div><div class="line">--disable-yasm \</div><div class="line">--disable-symver \</div><div class="line">--enable-gpl \</div><div class="line">--disable-ffmpeg \</div><div class="line">--disable-ffplay \</div><div class="line">--disable-ffprobe \</div><div class="line">--disable-ffserver \</div><div class="line">--disable-doc \</div><div class="line">--disable-symver \</div><div class="line">--cross-prefix=$TOOLCHAIN/bin/arm-linux-androideabi- \</div><div class="line">--enable-cross-compile \</div><div class="line">--sysroot=$SYSROOT \</div><div class="line">--extra-cflags=&quot;-Os -fpic $ADDI_CFLAGS&quot; \</div><div class="line">--extra-ldflags=&quot;$ADDI_LDFLAGS&quot; \</div><div class="line">$ADDITIONAL_CONFIGURE_FLAG</div><div class="line">make clean</div><div class="line">make</div><div class="line">make install</div></pre></td></tr></table></figure></p>
-<p>然后执行这个文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./build_android.sh</div></pre></td></tr></table></figure></p>
-<p>然后静静等待编译就好了，<br>编译完成之后，我们会发现，这个目录下多了一个名为<code>android</code>的目录，里面存放的就是我们想要的动态链接库和头文件。</p>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/02/10/FFMPEG for android 编译/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>

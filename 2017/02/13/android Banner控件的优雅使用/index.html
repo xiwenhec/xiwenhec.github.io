@@ -95,7 +95,7 @@
 <meta property="og:description" content="最近在项目开发中需要用到广告轮播控件，由于项目时间比较紧张，看到开源社区类也有类似的实现，于是就偷懒用了一下，但是悲剧就此来了，参考着给定的demo实现，一切是那么完美，一开始的时候，没有后台数据，但是，当伪造的数据替换成网络异步加载数据的时候，发现控件直接crash，于是查看了一下原因，瞬间蒙了，这个控件在当初设计的时候，原来没有考虑异步加载数据，可能是作者只是想要展示一下实现原理，并没有考虑这">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1539105-98e0e6f773bd43a6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1539105-08368900feb1b909.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-02-13T08:06:45.751Z">
+<meta property="og:updated_time" content="2017-02-13T08:13:24.933Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="android Banner控件的优雅使用">
 <meta name="twitter:description" content="最近在项目开发中需要用到广告轮播控件，由于项目时间比较紧张，看到开源社区类也有类似的实现，于是就偷懒用了一下，但是悲剧就此来了，参考着给定的demo实现，一切是那么完美，一开始的时候，没有后台数据，但是，当伪造的数据替换成网络异步加载数据的时候，发现控件直接crash，于是查看了一下原因，瞬间蒙了，这个控件在当初设计的时候，原来没有考虑异步加载数据，可能是作者只是想要展示一下实现原理，并没有考虑这">
@@ -368,6 +368,7 @@
 
       
         <p>最近在项目开发中需要用到<code>广告轮播控件</code>，由于项目时间比较紧张，看到开源社区类也有类似的实现，于是就偷懒用了一下，但是悲剧就此来了，参考着给定的demo实现，一切是那么完美，一开始的时候，没有后台数据，但是，当伪造的数据替换成网络异步加载数据的时候，发现控件直接<code>crash</code>，于是查看了一下原因，瞬间蒙了，这个控件在当初设计的时候，原来没有考虑异步加载数据，可能是作者只是想要展示一下实现原理，并没有考虑这么多，如果除去这个缺点，这个控件整体实现还是很好的，但是，不能异步网络加载，就代表它再好也没什么卵用，并且我们一般还要它有数据刷新的功能，感觉这么好的实现思路，不能就这么废了，很可惜了，于是画了一天的时间，在保持原作者理论的基础上，重写了控件，增加了异步数据的实现能力，同时，以一种更加优雅的实现方式，提供给调用者使用，这里特来跟大家分享一下。</p>
+<a id="more"></a>
 <p>###准备知识</p>
 <h4 id="一、ViewPager与pagerAdapter详解"><a href="#一、ViewPager与pagerAdapter详解" class="headerlink" title="一、ViewPager与pagerAdapter详解"></a>一、ViewPager与pagerAdapter详解</h4><p><code>ViewPager</code>有过一定<code>android</code>开发知识的人应该都很熟悉，用途我就不再这里详述了，我们在开发的过程中常用的是这样的使用方式：<code>viewPager+fragment</code>的方式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">private ViewPager mViewPager;</div><div class="line">private Fragment[] mFragments;</div><div class="line">...</div><div class="line">...</div><div class="line">mViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) &#123;</div><div class="line">        @Override</div><div class="line">        public Fragment getItem(int position) &#123;</div><div class="line">             return mFragments[position];</div><div class="line">        &#125;</div><div class="line">        @Override</div><div class="line">        public int getCount() &#123;</div><div class="line">           return mFragments.length;</div><div class="line">         &#125;</div><div class="line">    &#125;);</div></pre></td></tr></table></figure></p>
 <p>这样的使用方式是我们关注的重点放到到<code>Fragment</code>上，从而加快我们的开发，其实<code>ViewPager</code>并没有什么，重点是<code>Adapter</code>的实现方式，<code>ViewPager</code>的缤纷多彩的实现效果，其实都是得益于<code>Adapter</code>的实现方式，今天我们的重点也在这个<code>Adapter</code>上面，来实现我们的无限滑动的<code>ViewPager</code></p>

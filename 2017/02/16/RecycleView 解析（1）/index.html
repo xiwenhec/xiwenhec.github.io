@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="RecycleView," />
 
 
 
@@ -87,15 +87,28 @@
 
 
 
-<meta name="description" content="总有一些事用什么语言都不好表达，而我们希望用程序把它表达出来">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Sivin">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta name="description" content="android 开发中列表功能十分常见，以前我们可以使用ListView但是现在，我们有了更强大的RecycleView,下面就让我们来看看RecycleView。
+我们一般在使用RecycleView的时候，需要什么功能呢？
+
+1.可以添加header和footer
+2.支持上拉加载更多，这里我们不添加下拉刷新的功能，因为，下拉刷新在android中十分常见，它应该作为容器存在，以方便app在样">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RecycleView 解析（1）">
+<meta property="og:url" content="http://yoursite.com/2017/02/16/RecycleView 解析（1）/index.html">
 <meta property="og:site_name" content="Sivin">
-<meta property="og:description" content="总有一些事用什么语言都不好表达，而我们希望用程序把它表达出来">
+<meta property="og:description" content="android 开发中列表功能十分常见，以前我们可以使用ListView但是现在，我们有了更强大的RecycleView,下面就让我们来看看RecycleView。
+我们一般在使用RecycleView的时候，需要什么功能呢？
+
+1.可以添加header和footer
+2.支持上拉加载更多，这里我们不添加下拉刷新的功能，因为，下拉刷新在android中十分常见，它应该作为容器存在，以方便app在样">
+<meta property="og:updated_time" content="2017-02-16T05:52:11.970Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Sivin">
-<meta name="twitter:description" content="总有一些事用什么语言都不好表达，而我们希望用程序把它表达出来">
+<meta name="twitter:title" content="RecycleView 解析（1）">
+<meta name="twitter:description" content="android 开发中列表功能十分常见，以前我们可以使用ListView但是现在，我们有了更强大的RecycleView,下面就让我们来看看RecycleView。
+我们一般在使用RecycleView的时候，需要什么功能呢？
+
+1.可以添加header和footer
+2.支持上拉加载更多，这里我们不添加下拉刷新的功能，因为，下拉刷新在android中十分常见，它应该作为容器存在，以方便app在样">
 
 
 
@@ -123,13 +136,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/02/16/RecycleView 解析（1）/"/>
 
 
 
 
 
-  <title> Sivin </title>
+  <title> RecycleView 解析（1） | Sivin </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -154,9 +167,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left 
-   page-home 
- ">
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -257,9 +268,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -292,10 +303,7 @@
             
             
               
-                
-                <a class="post-title-link" href="/2017/02/16/RecycleView 解析（1）/" itemprop="url">
-                  RecycleView 解析（1）
-                </a>
+                RecycleView 解析（1）
               
             
           </h1>
@@ -368,9 +376,7 @@
       
 
       
-        
-          
-            <p>android 开发中列表功能十分常见，以前我们可以使用<code>ListView</code>但是现在，我们有了更强大的<code>RecycleView</code>,下面就让我们来看看<code>RecycleView</code>。</p>
+        <p>android 开发中列表功能十分常见，以前我们可以使用<code>ListView</code>但是现在，我们有了更强大的<code>RecycleView</code>,下面就让我们来看看<code>RecycleView</code>。</p>
 <p>我们一般在使用<code>RecycleView</code>的时候，需要什么功能呢？</p>
 <blockquote>
 <p>1.可以添加header和footer</p>
@@ -404,342 +410,66 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">DefalutItemDecoration</span> <span class="keyword">extends</span> <span class="title">RecyclerView</span>.<span class="title">ItemDecoration</span></span>&#123;</div><div class="line">    <span class="keyword">private</span> Context mContext;</div><div class="line">    <span class="keyword">private</span> Drawable mDivider;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> mOrientation;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> HORIZONTAL_LIST = LinearLayoutManager.HORIZONTAL;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> VERTICAL_LIST = LinearLayoutManager.VERTICAL;</div><div class="line"></div><div class="line">    <span class="comment">//我们通过获取系统属性中的listDivider来添加，在系统中的AppTheme中设置</span></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span>[] ATRRS  = <span class="keyword">new</span> <span class="keyword">int</span>[]&#123;</div><div class="line">            android.R.attr.listDivider</div><div class="line">    &#125;;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">DefalutItemDecoration</span><span class="params">(Context context, <span class="keyword">int</span> orientation, <span class="keyword">int</span> resId)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.mContext = context;</div><div class="line">        <span class="keyword">if</span>(resId == <span class="number">0</span>)&#123;</div><div class="line">            <span class="keyword">final</span> TypedArray ta = context.obtainStyledAttributes(ATRRS);</div><div class="line">            <span class="keyword">this</span>.mDivider = ta.getDrawable(<span class="number">0</span>);</div><div class="line">            ta.recycle();</div><div class="line">        &#125;<span class="keyword">else</span>&#123;</div><div class="line">            <span class="keyword">if</span>(Build.VERSION.SDK_INT&gt;=<span class="number">21</span>)&#123;</div><div class="line">                mDivider = context.getDrawable(resId);</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span>&#123;</div><div class="line">                mDivider = context.getResources().getDrawable(resId);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        setOrientation(orientation);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//设置屏幕的方向</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setOrientation</span><span class="params">(<span class="keyword">int</span> orientation)</span></span>&#123;</div><div class="line">        <span class="keyword">if</span> (orientation != HORIZONTAL_LIST &amp;&amp; orientation != VERTICAL_LIST)&#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"invalid orientation"</span>);        &#125;        mOrientation = orientation;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDraw</span><span class="params">(Canvas c, RecyclerView parent, RecyclerView.State state)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (mOrientation == HORIZONTAL_LIST)&#123;</div><div class="line">            drawVerticalLine(c, parent, state);</div><div class="line">        &#125;<span class="keyword">else</span> &#123;</div><div class="line">            drawHorizontalLine(c, parent, state);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//画横线, 这里的parent其实是显示在屏幕显示的这部分</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">drawHorizontalLine</span><span class="params">(Canvas c, RecyclerView parent, RecyclerView.State state)</span></span>&#123;</div><div class="line">        <span class="keyword">int</span> left = parent.getPaddingLeft();</div><div class="line">        <span class="keyword">int</span> right = parent.getWidth() - parent.getPaddingRight();</div><div class="line">        <span class="keyword">final</span> <span class="keyword">int</span> childCount = parent.getChildCount();</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; childCount; i++)&#123;</div><div class="line">            <span class="keyword">final</span> View child = parent.getChildAt(i);</div><div class="line"></div><div class="line">            <span class="comment">//获得child的布局信息</span></div><div class="line">            <span class="keyword">final</span> RecyclerView.LayoutParams params = (RecyclerView.LayoutParams)child.getLayoutParams();</div><div class="line">            <span class="keyword">final</span> <span class="keyword">int</span> top = child.getBottom() + params.bottomMargin;</div><div class="line">            <span class="keyword">final</span> <span class="keyword">int</span> bottom = top + mDivider.getIntrinsicHeight();</div><div class="line">            mDivider.setBounds(left, top, right, bottom);</div><div class="line">            mDivider.draw(c);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//画竖线</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">drawVerticalLine</span><span class="params">(Canvas c, RecyclerView parent, RecyclerView.State state)</span></span>&#123;</div><div class="line">        <span class="keyword">int</span> top = parent.getPaddingTop();</div><div class="line">        <span class="keyword">int</span> bottom = parent.getHeight() - parent.getPaddingBottom();</div><div class="line">        <span class="keyword">final</span> <span class="keyword">int</span> childCount = parent.getChildCount();</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; childCount; i++)&#123;</div><div class="line">            <span class="keyword">final</span> View child = parent.getChildAt(i);</div><div class="line"></div><div class="line">            <span class="comment">//获得child的布局信息</span></div><div class="line">            <span class="keyword">final</span> RecyclerView.LayoutParams params = (RecyclerView.LayoutParams)child.getLayoutParams();</div><div class="line">            <span class="keyword">final</span> <span class="keyword">int</span> left = child.getRight() + params.rightMargin;</div><div class="line">            <span class="keyword">final</span> <span class="keyword">int</span> right = left + mDivider.getIntrinsicWidth();</div><div class="line">            mDivider.setBounds(left, top, right, bottom);</div><div class="line">            mDivider.draw(c);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//由于Divider也有长宽高，每一个Item需要向下或者向右偏移</span></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getItemOffsets</span><span class="params">(Rect outRect, View view, RecyclerView parent, RecyclerView.State state)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(mOrientation == HORIZONTAL_LIST)&#123;</div><div class="line">            <span class="comment">//画横线，就是往下偏移一个分割线的高度</span></div><div class="line">            outRect.set(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, mDivider.getIntrinsicHeight());</div><div class="line">        &#125;<span class="keyword">else</span> &#123;</div><div class="line">            <span class="comment">//画竖线，就是往右偏移一个分割线的宽度</span></div><div class="line">            outRect.set(<span class="number">0</span>, <span class="number">0</span>, mDivider.getIntrinsicWidth(), <span class="number">0</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>以上就是<code>RecycleView</code>最基本简单的使用，后面将会进行对<code>RecycleView</code>更高级的用法</p>
 
-          
+      
+    </div>
+
+    <div>
+      
         
+
       
     </div>
 
     <div>
       
-    </div>
+        
 
-    <div>
       
     </div>
 
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/13/android Banner控件的优雅使用/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="Sivin(析问)">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/uploads/header.png">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="Sivin">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="Sivin" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/02/13/android Banner控件的优雅使用/" itemprop="url">
-                  android Banner控件的优雅使用
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-13T16:00:14+08:00">
-                2017-02-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
+        <div class="post-tags">
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/android/" itemprop="url" rel="index">
-                    <span itemprop="name">android</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
+            <a href="/tags/RecycleView/" rel="tag"># RecycleView</a>
           
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
         </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
         
-          <p>最近在项目开发中需要用到<code>广告轮播控件</code>，由于项目时间比较紧张，看到开源社区类也有类似的实现，于是就偷懒用了一下，但是悲剧就此来了，参考着给定的demo实现，一切是那么完美，一开始的时候，没有后台数据，但是，当伪造的数据替换成网络异步加载数据的时候，发现控件直接<code>crash</code>，于是查看了一下原因，瞬间蒙了，这个控件在当初设计的时候，原来没有考虑异步加载数据，可能是作者只是想要展示一下实现原理，并没有考虑这么多，如果除去这个缺点，这个控件整体实现还是很好的，但是，不能异步网络加载，就代表它再好也没什么卵用，并且我们一般还要它有数据刷新的功能，感觉这么好的实现思路，不能就这么废了，很可惜了，于是画了一天的时间，在保持原作者理论的基础上，重写了控件，增加了异步数据的实现能力，同时，以一种更加优雅的实现方式，提供给调用者使用，这里特来跟大家分享一下。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/02/13/android Banner控件的优雅使用/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/13/android Banner控件的优雅使用/" rel="next" title="android Banner控件的优雅使用">
+                <i class="fa fa-chevron-left"></i> android Banner控件的优雅使用
+              </a>
+            
           </div>
-          <!--/noindex-->
-        
-      
-    </div>
 
-    <div>
-      
-    </div>
+          <span class="post-nav-divider"></span>
 
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/10/FFMPEG for android 编译/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="Sivin(析问)">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/uploads/header.png">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="Sivin">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="Sivin" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
+          <div class="post-nav-prev post-nav-item">
             
-            
-              
-                
-                <a class="post-title-link" href="/2017/02/10/FFMPEG for android 编译/" itemprop="url">
-                  FFMPEG for android 编译
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-10T18:35:29+08:00">
-                2017-02-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/FFMPEG/" itemprop="url" rel="index">
-                    <span itemprop="name">FFMPEG</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          <p>最近在研究Android视频播放功能，网上有很多关于视频播放解码的库，但是作为程序员的我，还是希望能从源头出发，学习FFMPGE自然是势在必行了。</p>
-<p>网上有关FFMPGE学习的文章有很多，但是对于初学者而言，看的时候似乎总有一点不知所以然感觉，本人也是其中一个。再此，作为一个初学者，我们需要按着怎样的步骤来学习FFPEG呢？本系列文章就来一起记录一下，初学者探索FFMPEG的历程，一点一滴的走向通往大神之路。</p>
-<p>本片文章，我的计划是这样的，</p>
-<blockquote>
-<ol>
-<li>编译出<code>ffmpeg</code>可以为Android使用动态链接库</li>
-<li>Android studio建立jni工程使用动态链接库</li>
-<li>使用动态链接库实现一个简单的视频播放</li>
-</ol>
-</blockquote>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/02/10/FFMPEG for android 编译/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
           
           </div>
@@ -747,6 +477,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -766,8 +500,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/uploads/header.png"
@@ -848,6 +591,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#recycleView初始化工作"><span class="nav-number">1.</span> <span class="nav-text">recycleView初始化工作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定义MyViewHolder"><span class="nav-number">2.</span> <span class="nav-text">定义MyViewHolder</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#初始化适配器同时设置适配器"><span class="nav-number">3.</span> <span class="nav-text">初始化适配器同时设置适配器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分割线的简单写法DefalutItemDecoration"><span class="nav-number">4.</span> <span class="nav-text">分割线的简单写法DefalutItemDecoration</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
     </div>
@@ -954,6 +713,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
 
   
 

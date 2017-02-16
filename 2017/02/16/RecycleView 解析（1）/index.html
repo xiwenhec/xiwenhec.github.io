@@ -87,16 +87,28 @@
 
 
 
-<meta name="description" content="android 开发中列表功能十分常见，以前我们可以使用ListView但是现在，我们有了更强大的RecycleView,下面就让我们来看看RecycleView。">
+<meta name="description" content="android 开发中列表功能十分常见，以前我们可以使用ListView但是现在，我们有了更强大的RecycleView,下面就让我们来看看RecycleView。
+我们一般在使用RecycleView的时候，需要什么功能呢？
+
+1.可以添加header和footer
+2.支持上拉加载更多，这里我们不添加下拉刷新的功能，因为，下拉刷新在android中十分常见，它应该作为容器存在，以方便app在样">
 <meta property="og:type" content="article">
 <meta property="og:title" content="RecycleView 解析（1）">
 <meta property="og:url" content="http://yoursite.com/2017/02/16/RecycleView 解析（1）/index.html">
 <meta property="og:site_name" content="Sivin">
-<meta property="og:description" content="android 开发中列表功能十分常见，以前我们可以使用ListView但是现在，我们有了更强大的RecycleView,下面就让我们来看看RecycleView。">
-<meta property="og:updated_time" content="2017-02-16T05:55:20.944Z">
+<meta property="og:description" content="android 开发中列表功能十分常见，以前我们可以使用ListView但是现在，我们有了更强大的RecycleView,下面就让我们来看看RecycleView。
+我们一般在使用RecycleView的时候，需要什么功能呢？
+
+1.可以添加header和footer
+2.支持上拉加载更多，这里我们不添加下拉刷新的功能，因为，下拉刷新在android中十分常见，它应该作为容器存在，以方便app在样">
+<meta property="og:updated_time" content="2017-02-16T05:57:51.832Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RecycleView 解析（1）">
-<meta name="twitter:description" content="android 开发中列表功能十分常见，以前我们可以使用ListView但是现在，我们有了更强大的RecycleView,下面就让我们来看看RecycleView。">
+<meta name="twitter:description" content="android 开发中列表功能十分常见，以前我们可以使用ListView但是现在，我们有了更强大的RecycleView,下面就让我们来看看RecycleView。
+我们一般在使用RecycleView的时候，需要什么功能呢？
+
+1.可以添加header和footer
+2.支持上拉加载更多，这里我们不添加下拉刷新的功能，因为，下拉刷新在android中十分常见，它应该作为容器存在，以方便app在样">
 
 
 
@@ -365,7 +377,6 @@
 
       
         <p>android 开发中列表功能十分常见，以前我们可以使用<code>ListView</code>但是现在，我们有了更强大的<code>RecycleView</code>,下面就让我们来看看<code>RecycleView</code>。</p>
-<a id="more"></a>
 <p>我们一般在使用<code>RecycleView</code>的时候，需要什么功能呢？</p>
 <blockquote>
 <p>1.可以添加header和footer</p>
@@ -378,6 +389,7 @@
 <p>8.停止滚动图片加载</p>
 </blockquote>
 <p>以上呢基本差不多就是我们需要的功能了，下面我们就来一步一步的完成上面的功能</p>
+<a id="more"></a>
 <p>首先呢，我们来看看<code>recycleView</code>的基本用法</p>
 <p>首先呢我们要记住以下几步：</p>
 <blockquote>

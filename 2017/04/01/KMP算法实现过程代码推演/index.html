@@ -1,0 +1,736 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="算法," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="KMP算法是一个经典的字符串匹配算法,但是原理比较晦涩难懂,这里推荐一篇个人感觉分析比较好的文章,个人感觉图灵社区的这篇KMP算法解析讲解的非常的好.下面我使用java语言对KMP算法的实现,原理的话有兴趣的朋友可以直接点击链接学习就行了.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Sivin">
+<meta property="og:url" content="http://yoursite.com/2017/04/01/KMP算法实现过程代码推演/index.html">
+<meta property="og:site_name" content="Sivin">
+<meta property="og:description" content="KMP算法是一个经典的字符串匹配算法,但是原理比较晦涩难懂,这里推荐一篇个人感觉分析比较好的文章,个人感觉图灵社区的这篇KMP算法解析讲解的非常的好.下面我使用java语言对KMP算法的实现,原理的话有兴趣的朋友可以直接点击链接学习就行了.">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1539105-c595aa74cce3d9ee.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-04-01T15:07:41.934Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Sivin">
+<meta name="twitter:description" content="KMP算法是一个经典的字符串匹配算法,但是原理比较晦涩难懂,这里推荐一篇个人感觉分析比较好的文章,个人感觉图灵社区的这篇KMP算法解析讲解的非常的好.下面我使用java语言对KMP算法的实现,原理的话有兴趣的朋友可以直接点击链接学习就行了.">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1539105-c595aa74cce3d9ee.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/04/01/KMP算法实现过程代码推演/"/>
+
+
+
+
+
+  <title>  | Sivin </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Sivin</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <p class="site-subtitle"></p>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/01/KMP算法实现过程代码推演/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Sivin(析问)">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/uploads/header.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Sivin">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Sivin" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-01T23:05:00+08:00">
+                2017-04-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><code>KMP</code>算法是一个经典的<code>字符串匹配算法</code>,但是原理比较晦涩难懂,这里推荐一篇个人感觉分析比较好的文章,个人感觉图灵社区的这篇<a href="http://www.ituring.com.cn/article/59881" target="_blank" rel="external"><code>KMP算法解析</code></a>讲解的非常的好.下面我使用java语言对<code>KMP</code>算法的实现,原理的话有兴趣的朋友可以直接点击链接学习就行了.</p>
+<a id="more"></a>
+<h3 id="1-next原理递归实现"><a href="#1-next原理递归实现" class="headerlink" title="1. next原理递归实现"></a>1. next原理递归实现</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * 查找从j+1长度的字符串的最大首尾匹配位置</div><div class="line"> * j=0,表示的字符串只有一个字符,没有首尾,表示的直接表示不匹配,我们用-1表示,</div><div class="line"> * 返回的值实际上是最大匹配字符串的字符下标</div><div class="line"> * 例如aa则返回的是0,表示的是这个字符串index=0的位置是最大匹配位置</div><div class="line"> * @param N</div><div class="line"> * @param j</div><div class="line"> * @return</div><div class="line"> */</div><div class="line">public static int next(char[] N,int j)&#123;</div><div class="line">	if(j == 0 )</div><div class="line">		return -1;</div><div class="line">	</div><div class="line">	//如果第j-1位的首尾匹配已经知道是i</div><div class="line">	int i = next(N,j-1);</div><div class="line">	</div><div class="line">	//第一种情况：i+1位和 j-1 +1位是否相等</div><div class="line">	if(N[i+1]==N[j])</div><div class="line">		</div><div class="line">		return i+1;//相等则收尾匹配长度位数加1</div><div class="line">	</div><div class="line">	else&#123; //不等</div><div class="line">		</div><div class="line">		//不断的向前搜索最大相同字符串,然后看看加1的位置是否与之匹配,如果匹配在得到最大匹配长度</div><div class="line">		//这里如果不懂,可以看图[1]</div><div class="line">		while(N[i+1] !=N[j] &amp;&amp; i&gt;=0)&#123;</div><div class="line">			i = next(N,i);</div><div class="line">		&#125;</div><div class="line">		</div><div class="line">		</div><div class="line">		//循环完成之后,肯定会出现两种情况</div><div class="line">		//1.N[i+1] == N[j] 这种情况我们返回结果</div><div class="line">		//2.i == -1 ;我们巧妙的利用-1+1 = 0 来表示 没有一个位置匹配出现的+1位置是0号位,这样也不会出现数组越界情况</div><div class="line">		if(N[i+1] == N[j])&#123; </div><div class="line">			</div><div class="line">			return i+1;</div><div class="line">			</div><div class="line">		&#125;else &#123;</div><div class="line">			</div><div class="line">			return -1;</div><div class="line">		&#125;</div><div class="line">			</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里附上一张 <code>while</code>循环代码块的原理图,帮助大家理解<br><img src="http://upload-images.jianshu.io/upload_images/1539105-c595aa74cce3d9ee.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="KMP.png">imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)</p>
+<h3 id="Next数组求解循环实现"><a href="#Next数组求解循环实现" class="headerlink" title="Next数组求解循环实现"></a>Next数组求解循环实现</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">public static int[] getNext(String pattern)&#123;</div><div class="line">	//新建一个next[]数组</div><div class="line">	int[] next = new int[pattern.length()];</div><div class="line">	int i;</div><div class="line">	</div><div class="line">	//虚拟当只有一个元素的时候也是会出现匹配位置发生的,我们将这个位置定义为-1;</div><div class="line">	next[0] = i = -1;</div><div class="line"></div><div class="line">	//开始同一个一个循环分别判断每一个位置上的如果发生匹配的位置index </div><div class="line">	//index = 0 已近存在,我们直接从1开始</div><div class="line">	for(int j = 1;j&lt;pattern.length();j++)&#123;</div><div class="line">		</div><div class="line">		// 已经存在最大匹位置时,向前寻找最大匹配的 index 就是 i 然后看i+1是否和j相同</div><div class="line">		while(i &gt;=0 &amp;&amp; pattern.charAt(i+1) != pattern.charAt(j))&#123;</div><div class="line">			i = next[i];</div><div class="line">		&#125;</div><div class="line">		</div><div class="line">		//i= -1和i&gt;=0统一</div><div class="line">		if(pattern.charAt(i+1) == pattern.charAt(j))&#123;  //出现了匹配,则在目前最大出现匹位置基础上+1</div><div class="line">			i++;</div><div class="line">		&#125;</div><div class="line">		</div><div class="line">		next[j] = i;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	return next;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="匹配代码实现"><a href="#匹配代码实现" class="headerlink" title="匹配代码实现"></a>匹配代码实现</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line">	 * 为什么 i要从-1开始，</div><div class="line">	 * i表示的是如果j位置发生适配,</div><div class="line">	 * 那么j下一次比较应该和find的i+1的位置比较,这样就从总体上规范了。</div><div class="line">	 * 因为next数组中存放的没有匹配项值是-1因此，表示的如果没有匹配项应该和0位置进行比较。</div><div class="line">	 * @param origin</div><div class="line">	 * @param find</div><div class="line">	 */</div><div class="line">	public static void searchSque(String origin,String pattern)&#123;</div><div class="line">		int next[] = getNext1(pattern);</div><div class="line">		</div><div class="line">		//为了下面更好的表示，用匹配串的下一个字符和目标位置进行对比</div><div class="line">		int i = -1;</div><div class="line">		for(int j = 0;j&lt;origin.length();j++)&#123;</div><div class="line">			//如果发生了不匹配的时,回溯到i位置并从i+1位置开始比对</div><div class="line">			while(i&gt;=0 &amp;&amp; origin.charAt(j) != pattern.charAt(i+1))&#123; </div><div class="line">				i=next[i];</div><div class="line">			&#125;</div><div class="line">			</div><div class="line">			if(origin.charAt(j)== pattern.charAt(i+1))&#123;</div><div class="line">				i++;</div><div class="line">			&#125;</div><div class="line">			</div><div class="line">			if(i == pattern.length()-1)&#123; //完成了一次匹配</div><div class="line">				System.out.println(&quot;字符串开始匹配位置：&quot;+(j-i));</div><div class="line">				</div><div class="line">				//当出现了一次匹之后,在此判断是否在本串最大匹配子串之后是能接着匹配</div><div class="line">				//T = &quot;absabsab&quot;</div><div class="line">				//P = &quot;absab&quot;;</div><div class="line">				//出现了两次匹配</div><div class="line">				i = next[i];</div><div class="line">			&#125;</div><div class="line">			</div><div class="line">			</div><div class="line">		&#125;</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
+<h3 id="测试代码"><a href="#测试代码" class="headerlink" title="测试代码"></a>测试代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public static void main(String[] args) &#123;</div><div class="line">		</div><div class="line">		String origin = &quot;ccabsabsababssabcceabcabcabcdabcabsabcabccd&quot;;</div><div class="line">		String find = &quot;absab&quot;;</div><div class="line">		for(int i :getNext(find))&#123;</div><div class="line">			System.out.print(i+&quot;---  &quot;);</div><div class="line">		&#125;</div><div class="line">		searchSque(origin, find);</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/算法/" rel="tag"># 算法</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/16/RecycleView 解析（1）/" rel="next" title="RecycleView 解析（1）">
+                <i class="fa fa-chevron-left"></i> RecycleView 解析（1）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/header.png"
+               alt="Sivin(析问)" />
+          <p class="site-author-name" itemprop="name">Sivin(析问)</p>
+          <p class="site-description motion-element" itemprop="description">总有一些事用什么语言都不好表达，而我们希望用程序把它表达出来</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/xiwenhec" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.jianshu.com/u/e98cacedbfa8" title="简书" target="_blank">简书</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-next原理递归实现"><span class="nav-number">1.</span> <span class="nav-text">1. next原理递归实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Next数组求解循环实现"><span class="nav-number">2.</span> <span class="nav-text">Next数组求解循环实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#匹配代码实现"><span class="nav-number">3.</span> <span class="nav-text">匹配代码实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试代码"><span class="nav-number">4.</span> <span class="nav-text">测试代码</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sivin(析问)</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

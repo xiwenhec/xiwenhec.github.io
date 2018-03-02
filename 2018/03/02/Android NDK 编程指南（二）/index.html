@@ -1,0 +1,869 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="NDK," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="有了第一篇内容的基础之后，我们开始正式学习JNI。如果前面一片文章你已经写出来了一个demo，但是还有很多有疑问的地方，没关系，你可以把你的疑问记下来，在接下来的学习中，我们将会慢慢解开这些疑问。首先我们看一张图。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android NDK 编程指南（二）">
+<meta property="og:url" content="http://yoursite.com/2018/03/02/Android NDK 编程指南（二）/index.html">
+<meta property="og:site_name" content="Sivin">
+<meta property="og:description" content="有了第一篇内容的基础之后，我们开始正式学习JNI。如果前面一片文章你已经写出来了一个demo，但是还有很多有疑问的地方，没关系，你可以把你的疑问记下来，在接下来的学习中，我们将会慢慢解开这些疑问。首先我们看一张图。">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1539105-70746f1c9bf053b1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-03-02T03:03:41.754Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android NDK 编程指南（二）">
+<meta name="twitter:description" content="有了第一篇内容的基础之后，我们开始正式学习JNI。如果前面一片文章你已经写出来了一个demo，但是还有很多有疑问的地方，没关系，你可以把你的疑问记下来，在接下来的学习中，我们将会慢慢解开这些疑问。首先我们看一张图。">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1539105-70746f1c9bf053b1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/03/02/Android NDK 编程指南（二）/"/>
+
+
+
+
+
+  <title> Android NDK 编程指南（二） | Sivin </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Sivin</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <p class="site-subtitle"></p>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/02/Android NDK 编程指南（二）/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Sivin(析问)">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/uploads/header.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Sivin">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Sivin" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Android NDK 编程指南（二）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-02T10:55:11+08:00">
+                2018-03-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/NDK/" itemprop="url" rel="index">
+                    <span itemprop="name">NDK</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>有了第一篇内容的基础之后，我们开始正式学习<code>JNI</code>。如果前面一片文章你已经写出来了一个<code>demo</code>，但是还有很多有疑问的地方，没关系，你可以把你的疑问记下来，在接下来的学习中，我们将会慢慢解开这些疑问。首先我们看一张图。</p>
+<a id="more"></a>
+<p><img src="http://upload-images.jianshu.io/upload_images/1539105-70746f1c9bf053b1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="JNI.png"></p>
+<p>这张图很明晰的表达出了<code>JNI</code>在<code>NDK</code>编程中所担任的角色，以及<code>JNI</code>在和<code>java</code>虚拟机的关系。很显然它属于<code>java</code>虚拟机的一部分。</p>
+<p>我们知道在<code>Java</code>中一般有两种类型的方法，一个是<code>instance</code>方法，一个是<code>类方法</code>，在<code>JNI</code>对应的函数里面一般至少都会有两个参数，一个是<code>JNIEnv</code>，一个是<code>jobject</code>或者<code>jclass</code>,其中第二个参数的不同，就是对应着<code>Java</code>中的方法是所属于某个对象还是所属于这个类。这两个参数会在<code>JNIEnv</code>方法调用的时候有些地方会用到。</p>
+<p>我们使用<code>NDK</code>编程的目的其实就是为了用<code>C/C++</code>代码来帮助我们实现<code>java</code>里不好实现或者不方便实现的内容，问题说的通俗一点<code>NDK</code>编程其实就是<code>java</code>如何与<code>C/++</code>进行数据通信。</p>
+<p>通过上图我们了解到，java想要和<code>C/C++</code>进行数据通信，需要经过<code>JNI</code>层进行桥梁转换，也就是说我们的<code>java</code>层数据想要传递到<code>C/C++</code>层，首先要经过<code>JNI</code>层转换后才能到<code>C/C++</code>层。同理，<code>C/C++</code>层数据想要传递给<code>java</code>层也是如此。</p>
+<p>不同语言层级之间进行数据交互，必然涉及到数据类型的转换。不对等的数据类型是无法进行数据交互的，即使可以，也容易导致<code>bug</code>甚至错误的发生。</p>
+<p>下面我们就来看看这个三个层级之间数据类型是如何转换的。</p>
+<h3 id="基本数据类型转换"><a href="#基本数据类型转换" class="headerlink" title="基本数据类型转换"></a>基本数据类型转换</h3><p>我们知道在<code>java</code>里数据类型分成：<code>基本数据类型</code>和<code>引用数据类型</code>。<br>基本数据类型有<code>8种</code>分别是：<code>boolean</code>,<code>byte</code>,<code>char</code>,<code>short</code>,<code>int</code>,<code>long</code>,<code>float</code>,<code>double</code>。<br>三者的对应关系如下表：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">JavaType</th>
+<th style="text-align:center">JNIType</th>
+<th style="text-align:center">C/C++ Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">boolean</td>
+<td style="text-align:center">jboolean</td>
+<td style="text-align:center">uint8_t（unsigned char）</td>
+</tr>
+<tr>
+<td style="text-align:center">byte</td>
+<td style="text-align:center">jbyte</td>
+<td style="text-align:center">int8_t (signed char)</td>
+</tr>
+<tr>
+<td style="text-align:center">char</td>
+<td style="text-align:center">jchar</td>
+<td style="text-align:center">uint16_t (unsigned short)</td>
+</tr>
+<tr>
+<td style="text-align:center">short</td>
+<td style="text-align:center">jshort</td>
+<td style="text-align:center">int16_t (short)</td>
+</tr>
+<tr>
+<td style="text-align:center">int</td>
+<td style="text-align:center">jint</td>
+<td style="text-align:center">int32_t (int)</td>
+</tr>
+<tr>
+<td style="text-align:center">long</td>
+<td style="text-align:center">jlong</td>
+<td style="text-align:center">int64_t (long)</td>
+</tr>
+<tr>
+<td style="text-align:center">float</td>
+<td style="text-align:center">jfloat</td>
+<td style="text-align:center">float</td>
+</tr>
+<tr>
+<td style="text-align:center">double</td>
+<td style="text-align:center">jdouble</td>
+<td style="text-align:center">double</td>
+</tr>
+</tbody>
+</table>
+<p>上面的基本类型数据在同等对应之间是可以直接转换的，举一个例子：我们以<code>int</code>类型进行举例，其他类型类比如此就行了，还是我们的<code>add</code>函数。<br>java中的原型：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">public native int add(int a ,int b);</div></pre></td></tr></table></figure></p>
+<p>这个<code>java</code>方法向<code>JNI</code>层传递了两个<code>int</code>类型的参数，同时需要从<code>JNI</code>层，返回一个<code>int</code>类型的参数。这个参数传递到<code>JNI</code>层是怎样转换的呢？记住，我们并不能直接传递到<code>C/C++</code>层，总是从<code>Java</code>-&gt;<code>JNI</code>-&gt;<code>C/C++</code>。虽然很多<code>JNI</code>的代码放在<code>C/C++</code>文件，但是这部分代码却属于<code>JNI</code>层。<br>接下来我们就来看看<code>JNI</code>层的代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">JNIEXPORT jint JNICALL</div><div class="line">Java_com_sivin_ndkdemo_NormalJni_add(JNIEnv *env, jobject instance, jint a ,jint b)</div></pre></td></tr></table></figure></p>
+<p>从个函数中我们发现<code>int</code>类型的参数转成了<code>jint</code>类型的参数，同时返回的类型也是<code>jint</code>类型。</p>
+<p>那么如何在将<code>jni</code>层的数据传递gei<code>C/C++</code>层呢，我们来看看代码实现<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">extern &quot;C&quot;</div><div class="line">int add(int a ,int b)&#123;</div><div class="line">    return a+b;</div><div class="line">&#125;</div><div class="line"></div><div class="line">extern &quot;C&quot;</div><div class="line">JNIEXPORT jint JNICALL</div><div class="line">Java_com_example_sivin_opengles_1andorid_MainActivity_add(JNIEnv *env, jobject instance, jint a,</div><div class="line">                                                          jint b) &#123;</div><div class="line">    jint sum = add(a,b);</div><div class="line">    return sum;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>为了明显的突出三个层级之间的关系，我们特意在<code>native</code>文件里写了一个<code>C</code>语言实现的函数，从函数中我们可以看到<code>jint</code>类型直接转换成<code>C</code>层的<code>int</code>类型，反之亦然，<code>C</code>层的返回的<code>int</code>类型也直接转换成<code>jint</code>然后又返回给了<code>java</code>层的<code>int</code>类型。</p>
+<p>我们想强调的一点是上面的类型转是java<code>基本数据类型</code>才能这样做，其他的数据类型是如何转换的呢？</p>
+<h3 id="引用数据类型转换"><a href="#引用数据类型转换" class="headerlink" title="引用数据类型转换"></a>引用数据类型转换</h3><p>清楚<code>java</code>语言的都知道在<code>java</code>中，除了基本数据类型，剩下就是<code>引用数据</code>类型：</p>
+<h4 id="Refrenece-数据类型"><a href="#Refrenece-数据类型" class="headerlink" title="Refrenece 数据类型"></a>Refrenece 数据类型</h4><p><code>Java</code>的<code>引用数据类型</code>并不像<code>原始数据类型</code>一样转换到<code>JNI层</code>之后可以直接被<code>C/C++</code>使用，它需要经过再次的<code>变换</code>，使之可以与<code>C/C++</code>进行数据交互，<code>JNI</code>提供了一系列的<code>API</code>来帮助我们完成这些<code>变换</code>，这些<code>API</code>通过<code>JNIEnv</code>获取，并调用。</p>
+<p><strong>JAVA中的都有哪些引用数据类型呢?</strong></p>
+<ul>
+<li>object</li>
+<li>class</li>
+<li>throwable</li>
+<li>String</li>
+<li>Arrays</li>
+<li>NIO Buffers</li>
+<li>Fields</li>
+<li>Methods</li>
+</ul>
+<p>上面我们可以完全用<code>object</code>代替所有，但是这里我们并不打算这样做，上面的<code>object</code>仅代表普通的<code>java</code>对象。因为在<code>JNI</code>中不同的引用数据类型对应着不同的<code>JNI</code>数据类型。具体对应我们看下表：</p>
+<p><strong>JNI引用数据类型对应表</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">JavaType</th>
+<th style="text-align:center">JNIType</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">java.lang.Class</td>
+<td style="text-align:center">jclass</td>
+</tr>
+<tr>
+<td style="text-align:center">java.lang.Throwable</td>
+<td style="text-align:center">jthrwoable</td>
+</tr>
+<tr>
+<td style="text-align:center">java.lang.String</td>
+<td style="text-align:center">jstring</td>
+</tr>
+<tr>
+<td style="text-align:center">other objects</td>
+<td style="text-align:center">jobject</td>
+</tr>
+<tr>
+<td style="text-align:center">object[ ]</td>
+<td style="text-align:center">jobjectArray</td>
+</tr>
+<tr>
+<td style="text-align:center">基本数据类型[ ] (例如：int[ ])</td>
+<td style="text-align:center">j基本数据类型Array (例如：jintArray)</td>
+</tr>
+<tr>
+<td style="text-align:center">other arrays</td>
+<td style="text-align:center">jarray</td>
+</tr>
+</tbody>
+</table>
+<p>看上面的这个表，不懂的人看的是一头雾水，最显而易见的疑惑是，怎么没有<code>C/C++</code>对应关系。没关系，我们下面的学习就知道了。上面的这个表我们就大致看一下，有一个整体感知就行了，下面我们就来具体的针对每一个对应关系进行解释说明。</p>
+<p>首先我们就来从最基本的<code>String</code>类型说起，有人怕是要问，为什么从<code>String</code>而不是<code>object</code>。我想说问的好，解释一下，很简单因为它常用而且特殊，同时<code>JNI</code>为<code>String</code>也提供专有的数据类型映射和一些处理函数。后面学习，我们会知道普通的<code>object</code>类型的映射还需要用到其他的知识，而<code>string</code>则相对更集中一些，同时处理字符串应该是每一个编程语言的一个很重要的任务。因此我们首先从<code>String</code>类说起。</p>
+<h4 id="String-操作"><a href="#String-操作" class="headerlink" title="String 操作"></a><strong>String 操作</strong></h4><p>首先我们回顾一下java <code>String</code>类的一些基本知识，首先<code>java.lang.String类</code>使用了<code>final</code>修饰，不能被继承。即双引号括起的字符串，如<code>&quot;abc&quot;</code>，都是作为<code>String类</code>的实例实现的。<code>String</code>是常量，其对象一旦构造就不能再被改变，换句话说，<code>String</code>对象是不可变的，每一个看起来会修改<code>String</code>值的方法，实际上都是创造了一个全新的<code>String</code>对象，而最初的<code>String</code>对象则丝毫未动。<code>String</code>对象具有只读特性，指向它的任何引用都不可能改变它的值，因此，也不会对其他的引用有什么影响。但是字符串引用可以重新赋值。</p>
+<p>基本的java <code>String</code>的一些基础知识我们就说这么多，如果对这方面还有疑问的建议好好复习一下这方面的知识。</p>
+<p>我们通过上面的表可以知道java中的<code>String</code>类型的数据传递到<code>JNI</code>层后，就转变成了<code>jstring</code>数据类型。但是有一个问题，我们并不知道<code>jstring</code>数据类型该如何在<code>C/C++</code>中处理，记住我们的主线，总是<code>java层</code>–&gt; <code>JNI层</code>–&gt;<code>C/C++层</code>，然后在反过来。那么<code>jstring</code>是如何传递到<code>C/C++</code>层的呢？</p>
+<p>我们知道在<code>C</code>里面我们处理字符串使用过<code>char *</code>或者<code>char [ ]</code>，当然在<code>C++</code>里面还有<code>string类</code>，这些可以向基本类型一样直接进行转换吗？答案当然是不能。</p>
+<p>既然不能直接转换，肯定有转换的方式，否则我们就没法继续编程了。是的，在前面我们提到过，每一个<code>JNI</code>函数都有一个<code>JNIEnv *</code>的参数。这个参数里可以得到很多函数指针，通过这些函数，我们就可以让<code>Java</code>和<code>C/C++</code>进行数据通信。</p>
+<p>因为<code>Java</code>的<code>String</code>对象是不可变的，因此<code>JNI</code>并不提供任何修改<code>Java</code>中已经存在<code>String</code>类型数据内容的方法。</p>
+<p><code>JNI</code>同样支持<code>Unicode</code>和<code>UTF-8</code>编码的<code>String</code>,并且提供了两组方法集,来处理这些编码的字符串.<br>我们来看看那个方法能将<code>jstring</code>–&gt;转换到<code>C/C++</code>层可用的数据，我们打开<code>jni.h</code>头文件，找到<code>JNIEnv</code>结构体。看看里面有没有相关的方法，怎么找？很简单，想要将<code>jstring</code>变换到<code>C/C++</code>一定是通过一个函数，我们先看返回值，看看有没有返回<code>char *</code>相关的函数:<br>找了一圈，我们发现了下面这个相关的函数。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//将jvm内Unicode字符转换成UTF-8的字符串</div><div class="line">const char* (*GetStringUTFChars)(JNIEnv*, jstring, jboolean*);</div></pre></td></tr></table></figure></p>
+<p>在解释这个函数之前，我们先来补充一个知识点，在java中<code>字符串</code>在内存中是采用<code>unicode</code>编码方式存放的：任何一个字符对应两个字节的定长编码。即任何一个字符（无论中文还是英文）都算一个字符长度，占用两个字节。。<code>UTF-8</code>字符串使用一种向上兼容<code>7-bit ASCII</code>字符串的编码协议。<code>UTF-8字符</code>串很像<code>NULL</code>结尾的<code>C字符串</code>，在包含<code>非ASCII</code>字符的时候依然如此。所有的<code>7-bitASCII</code>字符的值都在<code>1~127</code>之间，这些值在<code>UTF-8编码</code>中保持原样。一个字节如果最高位被设置了，意味着这是一个多字节字符（<code>16-bitUnicode</code>值）。</p>
+<p>一般情况下我们使用<code>GetStringUTFChars</code>函数进行转换成<code>C</code>的字符串，细心的你可能在寻找的时候还会发现另外一个函数<code>GetStringChars(this, string, isCopy)</code>，并且看到它的的返回值是<code>jchar</code>类型,这个函数返回的字符是<code>Unicode</code>编码的，一个字符占用两个字节，对应到<code>C/C++</code>就是<code>short</code>，对应到<code>jni</code>就是<code>jchar</code>由于<code>jchar</code>是一个16位的<code>short</code>类型，无法直接转换成<code>C</code>类型的字符串。因此我们一般不使用这个函数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line">*jstring：从java层传递转换过来的string类型数据</div><div class="line">*jbooean:表示当我们调用这个函数时将jstring转成成C字符串，是内存的直接指向还是，复制了一份，这里我们一般不关心它是怎么来的，因此我们一般在开发的过程中可以直接传递一个NULL或者nullptr</div><div class="line">*/</div><div class="line">const char* (*GetStringUTFChars)(JNIEnv*, jstring, jboolean*);</div></pre></td></tr></table></figure>
+<p>需要注意一点是，调用这个函数我们将会得到一个<code>C/C++</code>可以处理的字符串，究竟这个函数是将字符串的值复制一份到<code>C/C++</code>，还是直接将内存地址指向，是由java虚拟机实现机制决定的，但是作为开发者，我们应该遵循一个规则<code>我们总应该认为他是复制一份数据到C/C++，这样做至少不会有错</code>。既然我们认为是复制一份数据到<code>C/C++</code>，那么这份内存空间就应该需要我们自己管理了，否则可能会引发<code>内存泄露</code>，因此我们在不需要这份内存数据之后应该将这份内存释放掉。</p>
+<p>如何释放内存呢，是不是像<code>C/C++</code>一样使用<code>free</code>或者<code>delete</code>呢？因为我们不清楚从<code>JNI</code>到<code>C/C++</code>是如何转换的，因此如果直接使用<code>free</code>显然是不合适的，同样<code>JNI</code>为我们提供相关的释放这段<code>字符串内存</code>的方法。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line">*jstring ：是从java层传递过来的jstring</div><div class="line">*char * ：由jstring转换成的字符串</div><div class="line">ReleaseStringUTFChars(jstring ,const char *);</div></pre></td></tr></table></figure></p>
+<p>转换和释放都已经说完了，剩下的我们就可以利用<code>C/C++</code>相关的东西来处理我们的业务了。在处理完成之后，我们想将我们处理的结果在返回给<code>java</code>层。这一步如何实现呢？</p>
+<p>显然我们需要将<code>char *</code>数据转换成<code>jstring</code>然后<code>JNI</code>就会将<code>jstring</code>传递到java层转换成<code>String</code>。</p>
+<p>我们知道在<code>java</code>层<code>String</code>实例在Java中可以通过<code>new</code> 的方式被实例化出来，那么在<code>JNI</code>层中是否有方式也能创造一个<code>jstring</code>然后传递到<code>java</code>层呢？显然是有的，同样我们可以查阅<code>JNIEnv *</code>，w其中<code>NewString</code>和一个<code>NewStringUTF</code>函数，这个两个函数的区别和上面说的一样，这里我们使用<code>newStringUTF</code>这个函数，同样有一个问题，我们可以用<code>C/C++</code>分配的<code>char *</code>来创造<code>jstring</code>对象，那么这个块内存空间是否需要释放呢？是<code>return前</code>释放还是<code>return后</code>释放呢？显然我们不能在<code>return前</code>释放，因为释放了内存，我们java层如何处理呢？。在<code>return后</code>释放？，这个更不现实了，这段代码就不会执行。那么该怎么办呢？答案是，不用管理这块内存，因为我们转成<code>jstring</code>之后传递给了java虚拟机，这块内存空间就由java虚拟机自己管理了。</p>
+<p>示例代码如下:<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">jstring javaString;</div><div class="line">javaString = (*env)-&gt;NewStringUTF(env, <span class="string">"Hello World!"</span>);</div><div class="line"><span class="keyword">return</span> javaString</div></pre></td></tr></table></figure></p>
+<p>这个方法传入一个<code>c</code>类型的字符串,返回一个<code>Java</code>类型的字符，由于可能会由于内存空间不足,因此，这个函数将会返回<code>NULL</code>阻止<code>Native code</code>继续运行，同时会抛出一个异常.</p>
+<p>这样我们就把一个<code>字符串</code>处理流程就讲解完了，当然还有很多其他的细节我们没有讲到，如<code>unicode</code>字符串等，这里我们后续在补充，因为它还涉及到<code>字符编码</code>问题。这里我们知道有这么回事就行了。但是这已经可以满足我们常规的处理需求了。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/NDK/" rel="tag"># NDK</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/02/Android NDK 编程指南（一）/" rel="next" title="Android NDK 编程指南（一）">
+                <i class="fa fa-chevron-left"></i> Android NDK 编程指南（一）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/header.png"
+               alt="Sivin(析问)" />
+          <p class="site-author-name" itemprop="name">Sivin(析问)</p>
+          <p class="site-description motion-element" itemprop="description">总有一些事用什么语言都不好表达，而我们希望用程序把它表达出来</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/xiwenhec" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.jianshu.com/u/e98cacedbfa8" title="简书" target="_blank">简书</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本数据类型转换"><span class="nav-number">1.</span> <span class="nav-text">基本数据类型转换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#引用数据类型转换"><span class="nav-number">2.</span> <span class="nav-text">引用数据类型转换</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Refrenece-数据类型"><span class="nav-number">2.1.</span> <span class="nav-text">Refrenece 数据类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#String-操作"><span class="nav-number">2.2.</span> <span class="nav-text">String 操作</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sivin(析问)</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

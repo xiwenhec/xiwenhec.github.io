@@ -87,15 +87,25 @@
 
 
 
-<meta name="description" content="总有一些事用什么语言都不好表达，而我们希望用程序把它表达出来">
-<meta property="og:type" content="website">
+<meta name="description" content="Android NDK 编程指南（一）标签（空格分隔）： NDK
+
+前言一般的我们在开发Android应用程序时都是用Java语言开发, 但是随着业务要求的提高,纯Java平台可能会达到瓶颈,不同的功能模块如果考虑用其他语言实现可能会有更好的表现,甚至可以做到Java语言达不到的效果.
+本篇我们最开始部分来探讨Android平台下如何使用C/C++语言来开发Android应用。本篇的一系列文章都是">
+<meta property="og:type" content="article">
 <meta property="og:title" content="Sivin">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:url" content="http://yoursite.com/2018/03/02/Android NDK 编程指南（一）/index.html">
 <meta property="og:site_name" content="Sivin">
-<meta property="og:description" content="总有一些事用什么语言都不好表达，而我们希望用程序把它表达出来">
+<meta property="og:description" content="Android NDK 编程指南（一）标签（空格分隔）： NDK
+
+前言一般的我们在开发Android应用程序时都是用Java语言开发, 但是随着业务要求的提高,纯Java平台可能会达到瓶颈,不同的功能模块如果考虑用其他语言实现可能会有更好的表现,甚至可以做到Java语言达不到的效果.
+本篇我们最开始部分来探讨Android平台下如何使用C/C++语言来开发Android应用。本篇的一系列文章都是">
+<meta property="og:updated_time" content="2018-03-02T02:24:30.282Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Sivin">
-<meta name="twitter:description" content="总有一些事用什么语言都不好表达，而我们希望用程序把它表达出来">
+<meta name="twitter:description" content="Android NDK 编程指南（一）标签（空格分隔）： NDK
+
+前言一般的我们在开发Android应用程序时都是用Java语言开发, 但是随着业务要求的提高,纯Java平台可能会达到瓶颈,不同的功能模块如果考虑用其他语言实现可能会有更好的表现,甚至可以做到Java语言达不到的效果.
+本篇我们最开始部分来探讨Android平台下如何使用C/C++语言来开发Android应用。本篇的一系列文章都是">
 
 
 
@@ -123,13 +133,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/03/02/Android NDK 编程指南（一）/"/>
 
 
 
 
 
-  <title> Sivin </title>
+  <title>  | Sivin </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -154,9 +164,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left 
-   page-home 
- ">
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -257,9 +265,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -293,9 +301,6 @@
             
               
                 
-                <a class="post-title-link" href="/2018/03/02/Android NDK 编程指南（一）/" itemprop="url">
-                  未命名
-                </a>
               
             
           </h1>
@@ -346,9 +351,7 @@
       
 
       
-        
-          
-            <h1 id="Android-NDK-编程指南（一）"><a href="#Android-NDK-编程指南（一）" class="headerlink" title="Android NDK 编程指南（一）"></a>Android NDK 编程指南（一）</h1><p>标签（空格分隔）： NDK</p>
+        <h1 id="Android-NDK-编程指南（一）"><a href="#Android-NDK-编程指南（一）" class="headerlink" title="Android NDK 编程指南（一）"></a>Android NDK 编程指南（一）</h1><p>标签（空格分隔）： NDK</p>
 <hr>
 <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>一般的我们在开发<code>Android</code>应用程序时都是用<code>Java</code>语言开发, 但是随着业务要求的提高,纯<code>Java</code>平台可能会达到瓶颈,不同的功能模块如果考虑用其他语言实现可能会有更好的表现,甚至可以做到<code>Java</code>语言达不到的效果.</p>
 <p>本篇我们最开始部分来探讨<code>Android</code>平台下如何使用<code>C/C++</code>语言来开发<code>Android</code>应用。本篇的一系列文章都是自己在开发，学习过程中一点一滴的积累，也希望和广大技术爱好者一起交流，共同促进技术的提升，如有不正确的地方，或者有欠缺的地方欢迎大家不吝赐教。</p>
@@ -396,16 +399,20 @@
 </code></pre><p>第二个参数：<code>jobject</code>或<code>jclass</code>: 我们注意到这两个参数一般并不是同时出现的，那么这两个参数代表什么呢？我们仔细观察发现，当我们的<code>java native</code>方法是对象方法时，我们生成的对应的<code>native  code</code>第二个参数就是<code>jobject</code> 如果我们的方法是<code>static</code>时我们生成的<code>native code</code>就是<code>jclass</code>，想必大家其实已经猜到了，<code>jobject</code>就是我们调用这个方法时所属的对象。<code>jclass</code>其实就是这个静态方法所属的<code>Class</code>类。<br>这两个参数会十分有用，我们在后面会更加具体的讨论这个两个参数的作用和意义。</p>
 <p>本篇内容就到此为止了。接下来我们会具体的讨论，<code>JNIEnv *</code>里具体有哪些转换函数，以及<code>JNI</code>和<code>native code</code>，<code>java code</code>之间数据传递是如何转换的，学习这些的前提是先把本篇内容写一个<code>demo</code>出来，弄懂这<code>demo</code>所表达出来的知识内容。建议初学者使用<code>android studio 2.2</code>以上的实现这个demo，至于如何使用<code>Cmake</code>我们会有后续文章讲解。</p>
 
-          
+      
+    </div>
+
+    <div>
+      
         
+
       
     </div>
 
     <div>
       
-    </div>
+        
 
-    <div>
       
     </div>
 
@@ -414,630 +421,38 @@
       
 
       
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/01/KMP算法实现过程代码推演/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="Sivin(析问)">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/uploads/header.png">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="Sivin">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="Sivin" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
         
-        
-          <h1 class="post-title" itemprop="name headline">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
+              <a href="/2017/04/01/KMP算法实现过程代码推演/" rel="next" title="KMP算法实现过程代码推演">
+                <i class="fa fa-chevron-left"></i> KMP算法实现过程代码推演
+              </a>
             
-              
-                
-                <a class="post-title-link" href="/2017/04/01/KMP算法实现过程代码推演/" itemprop="url">
-                  KMP算法实现过程代码推演
-                </a>
-              
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
             
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-01T23:05:00+08:00">
-                2017-04-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/算法/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          <p><code>KMP</code>算法是一个经典的<code>字符串匹配算法</code>,但是原理比较晦涩难懂,这里推荐一篇个人感觉分析比较好的文章,个人感觉图灵社区的这篇<a href="http://www.ituring.com.cn/article/59881"><code>KMP算法解析</code></a>讲解的非常的好.下面我使用java语言对<code>KMP</code>算法的实现,原理的话有兴趣的朋友可以直接点击链接学习就行了.</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/04/01/KMP算法实现过程代码推演/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </article>
 
 
-    
-      
 
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/16/RecycleView 解析（1）/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="Sivin(析问)">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/uploads/header.png">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="Sivin">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="Sivin" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/02/16/RecycleView 解析（1）/" itemprop="url">
-                  RecycleView 解析（1）
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-16T13:52:11+08:00">
-                2017-02-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/android/" itemprop="url" rel="index">
-                    <span itemprop="name">android</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>android 开发中列表功能十分常见，以前我们可以使用<code>ListView</code>但是现在，我们有了更强大的<code>RecycleView</code>,下面就让我们来看看<code>RecycleView</code>。</p>
-<p>我们一般在使用<code>RecycleView</code>的时候，需要什么功能呢？</p>
-<blockquote>
-<p>1.可以添加header和footer</p>
-<p>2.支持上拉加载更多，这里我们不添加下拉刷新的功能，因为，下拉刷新在android中十分常见，它应该作为容器存在，以方便<code>app</code>在样式上统一。</p>
-<p>3.支持多种Item的类型</p>
-<p>4.支持Item的点击事件和长按事件</p>
-<p>5.支持各种分割线，Item的间隔</p>
-<p>6.支持Itme的局部刷新</p>
-<p>7.支持删除增添数据项的动画</p>
-<p>8.停止滚动图片加载</p>
-</blockquote>
-<p>以上呢基本差不多就是我们需要的功能了，下面我们就来一步一步的完成上面的功能</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/02/16/RecycleView 解析（1）/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
+    <div class="post-spread">
       
     </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/13/android Banner控件的优雅使用/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="Sivin(析问)">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/uploads/header.png">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="Sivin">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="Sivin" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/02/13/android Banner控件的优雅使用/" itemprop="url">
-                  android Banner控件的优雅使用
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-13T16:00:14+08:00">
-                2017-02-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/android/" itemprop="url" rel="index">
-                    <span itemprop="name">android</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>最近在项目开发中需要用到<code>广告轮播控件</code>，由于项目时间比较紧张，看到开源社区类也有类似的实现，于是就偷懒用了一下，但是悲剧就此来了，参考着给定的demo实现，一切是那么完美，一开始的时候，没有后台数据，但是，当伪造的数据替换成网络异步加载数据的时候，发现控件直接<code>crash</code>，于是查看了一下原因，瞬间蒙了，这个控件在当初设计的时候，原来没有考虑异步加载数据，可能是作者只是想要展示一下实现原理，并没有考虑这么多，如果除去这个缺点，这个控件整体实现还是很好的，但是，不能异步网络加载，就代表它再好也没什么卵用，并且我们一般还要它有数据刷新的功能，感觉这么好的实现思路，不能就这么废了，很可惜了，于是画了一天的时间，在保持原作者理论的基础上，重写了控件，增加了异步数据的实现能力，同时，以一种更加优雅的实现方式，提供给调用者使用，这里特来跟大家分享一下。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/02/13/android Banner控件的优雅使用/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/10/FFMPEG for android 编译/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="Sivin(析问)">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/uploads/header.png">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="Sivin">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="Sivin" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/02/10/FFMPEG for android 编译/" itemprop="url">
-                  FFMPEG for android 编译
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-10T18:35:29+08:00">
-                2017-02-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/FFMPEG/" itemprop="url" rel="index">
-                    <span itemprop="name">FFMPEG</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>最近在研究Android视频播放功能，网上有很多关于视频播放解码的库，但是作为程序员的我，还是希望能从源头出发，学习FFMPGE自然是势在必行了。</p>
-<p>网上有关FFMPGE学习的文章有很多，但是对于初学者而言，看的时候似乎总有一点不知所以然感觉，本人也是其中一个。再此，作为一个初学者，我们需要按着怎样的步骤来学习FFPEG呢？本系列文章就来一起记录一下，初学者探索FFMPEG的历程，一点一滴的走向通往大神之路。</p>
-<p>本片文章，我的计划是这样的，</p>
-<blockquote>
-<ol>
-<li>编译出<code>ffmpeg</code>可以为Android使用动态链接库</li>
-<li>Android studio建立jni工程使用动态链接库</li>
-<li>使用动态链接库实现一个简单的视频播放</li>
-</ol>
-</blockquote>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/02/10/FFMPEG for android 编译/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-  </section>
-
-  
+  </div>
 
           
           </div>
@@ -1045,6 +460,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -1064,8 +483,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/uploads/header.png"
@@ -1146,6 +574,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Android-NDK-编程指南（一）"><span class="nav-number">1.</span> <span class="nav-text">Android NDK 编程指南（一）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.0.1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是JNI"><span class="nav-number">1.0.2.</span> <span class="nav-text">什么是JNI?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用JNI开发的流程"><span class="nav-number">1.0.3.</span> <span class="nav-text">使用JNI开发的流程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1声明本地方法"><span class="nav-number">1.0.3.1.</span> <span class="nav-text">1.1声明本地方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2获取头文件"><span class="nav-number">1.0.3.2.</span> <span class="nav-text">1.2获取头文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-4-Java代码中加载共享库"><span class="nav-number">1.0.3.3.</span> <span class="nav-text">1.4 Java代码中加载共享库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-5-Java代码中使用这个native-方法"><span class="nav-number">1.0.3.4.</span> <span class="nav-text">1.5 Java代码中使用这个native 方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-知识点梳理"><span class="nav-number">1.0.4.</span> <span class="nav-text">2.知识点梳理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#几个很重要的参数JNIEnv-env-jobject-jobject-jclass-jcls"><span class="nav-number">1.0.5.</span> <span class="nav-text">几个很重要的参数JNIEnv *env,jobject jobject,jclass jcls</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
     </div>
@@ -1252,6 +696,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
 
   
 

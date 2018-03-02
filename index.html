@@ -294,7 +294,7 @@
               
                 
                 <a class="post-title-link" href="/2018/03/02/Android NDK 编程指南（一）/" itemprop="url">
-                  未命名
+                  Android NDK 编程指南（一）
                 </a>
               
             
@@ -320,6 +320,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/NDK/" itemprop="url" rel="index">
+                    <span itemprop="name">NDK</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -347,56 +369,15 @@
 
       
         
-          
-            <h1 id="Android-NDK-编程指南（一）"><a href="#Android-NDK-编程指南（一）" class="headerlink" title="Android NDK 编程指南（一）"></a>Android NDK 编程指南（一）</h1><p>标签（空格分隔）： NDK</p>
-<hr>
-<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>一般的我们在开发<code>Android</code>应用程序时都是用<code>Java</code>语言开发, 但是随着业务要求的提高,纯<code>Java</code>平台可能会达到瓶颈,不同的功能模块如果考虑用其他语言实现可能会有更好的表现,甚至可以做到<code>Java</code>语言达不到的效果.</p>
+          <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>一般的我们在开发<code>Android</code>应用程序时都是用<code>Java</code>语言开发, 但是随着业务要求的提高,纯<code>Java</code>平台可能会达到瓶颈,不同的功能模块如果考虑用其他语言实现可能会有更好的表现,甚至可以做到<code>Java</code>语言达不到的效果.</p>
 <p>本篇我们最开始部分来探讨<code>Android</code>平台下如何使用<code>C/C++</code>语言来开发<code>Android</code>应用。本篇的一系列文章都是自己在开发，学习过程中一点一滴的积累，也希望和广大技术爱好者一起交流，共同促进技术的提升，如有不正确的地方，或者有欠缺的地方欢迎大家不吝赐教。</p>
-<p>总体分两部分:</p>
-<blockquote>
-<ul>
-<li><p>Android NDK 基础编程</p>
-</li>
-<li><p>Android 常用库的<code>NDK</code>实现</p>
-</li>
-</ul>
-</blockquote>
-<h3 id="什么是JNI"><a href="#什么是JNI" class="headerlink" title="什么是JNI?"></a>什么是JNI?</h3><p><code>JNI</code>是<code>Java</code>编程语言中的一个很强大有用的特性，它的存在使得<code>Java</code>类中的某个方法能够用<code>native code</code>实现，同时也能像普通的<code>Java</code>方法一样在<code>Java</code>的类中被调用。<code>Native</code>中的函数也能像<code>Java</code>中一样使用<code>Java</code>中的对象，同时也能创建一个新的<code>Java</code>对象，并且使用这些对象去<code>调用</code>,<code>修改</code>,<code>查询</code>。</p>
-<h3 id="使用JNI开发的流程"><a href="#使用JNI开发的流程" class="headerlink" title="使用JNI开发的流程"></a>使用JNI开发的流程</h3><blockquote>
-<ol>
-<li>在Java类中声明一个native方法</li>
-<li>运行<code>javah</code>命令获取包含该方法的C声明的头文件.</li>
-<li>用<code>C/C++</code>实现native方法.</li>
-<li>将C/C++代码编译成共享库</li>
-<li>在Java程序中加载该类库.</li>
-<li>java里面调用这个native方法</li>
-</ol>
-</blockquote>
-<p>下面我们写一个案例：我们计算两个数的和，我们想使用<code>C</code>语言来实现这个函数的功能。<br>当然这个功能我们可以使用<code>Java</code>代码实现。为了学习<code>JNI</code>我们首先应该从最简单的案例入手。</p>
-<h4 id="1-1声明本地方法"><a href="#1-1声明本地方法" class="headerlink" title="1.1声明本地方法"></a><strong>1.1声明本地方法</strong></h4><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 将字符串传从Java层传递给JNI层,在jni层处理完之后,在返回给Java层</div><div class="line"> * 函数功能移除掉字符串里的数字然后返回处理之后的字符串结果</div><div class="line"> * <span class="doctag">@param</span> srcStr</div><div class="line"> * <span class="doctag">@return</span> 处理之后的结果</div><div class="line"> */</div><div class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">int</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span></span>;</div></pre></td></tr></table></figure>
-<h4 id="1-2获取头文件"><a href="#1-2获取头文件" class="headerlink" title="1.2获取头文件"></a><strong>1.2获取头文件</strong></h4><p>使用<code>JDK</code>中的<code>javah</code>命令，注意<code>Javah</code>的目标是字节码文件，因此我们要提前将<code>Java</code>文件编译成<code>Class</code>文件，然后进入到字节码文件的工程目录使用命令生成头文件.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">// 直接在Android studio 命令窗口下进行如下操作</div><div class="line">cd \app\build\intermediates\classes\debug.</div><div class="line">// Javah 类的完整类名</div><div class="line">javah com.sivin.ndkdemo.NormalJni</div></pre></td></tr></table></figure>
-<p>如果没有什么错误就可以发现在<code>debug</code>目录下生成了一个<code>NormalJni.h</code>的头文件,下面我可以就可以使用该头文件了。</p>
-<p>那么为什么要这个头文件呢？事实上也可以不要这个头文件，我们知道在<code>C/C++</code>中，头文件就是声明函数用的，其实，如果想让<code>Java</code>可以调用<code>native</code>层代码，函数需要特定的命名才行（<code>Java_包名_类名_方法名</code>）和一些<code>特定的参数</code>而已，这些如果让开发这手写，未免有点繁琐，同时也容易写错，因此<code>Jdk</code>直接提供了<code>javah</code>的命令帮助我们生成了这个头文件，这样就不用我们自己写了。</p>
-<p>如果你使用的是<code>Android studio 2.2</code>以上版本,可以新建项目的时候勾选上<code>support c++</code>，这样就可以在书写<code>native</code>方法的时候，直接自动生成对应的对应的函数规范，不需要在做上面的工作了，这也是工具的方便。但是原理我觉得还是有必要搞清楚。</p>
-<p>####<strong>1.3编写Native代码</strong><br>通过上一步我们得到了<code>Java</code>层<code>native</code>方法对应的<code>C</code>层的方法,下面我们就来具体实现以下这个方法</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">JNIEXPORT jint JNICALL</div><div class="line">Java_com_sivin_ndkdemo_NormalJni_add(JNIEnv *env, jobject instance, jint a ,jint b) &#123;</div><div class="line">    return a +b;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>下面我们具体的任务就是实现<code>native</code>里面的代码，实现部分就是<code>C/C++</code>里面的知识了，这里我并不想过多的讲解如何使用<code>C/C++</code>来去处整数的功能。如果你对<code>C/C++</code>不是太了解，建议你先去学习一下。</p>
-<h4 id="1-4-Java代码中加载共享库"><a href="#1-4-Java代码中加载共享库" class="headerlink" title="1.4 Java代码中加载共享库"></a><strong>1.4 Java代码中加载共享库</strong></h4><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">static</span>&#123;</div><div class="line">    System.loadLibrary(<span class="string">"共享库名称"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>为什么使用静态代码块加载?</strong></p>
-<pre><code>当类加载的时候就应该去加载共享库.
-</code></pre><h4 id="1-5-Java代码中使用这个native-方法"><a href="#1-5-Java代码中使用这个native-方法" class="headerlink" title="1.5 Java代码中使用这个native 方法"></a><strong>1.5 Java代码中使用这个native 方法</strong></h4><p>经过上面的几部，我们已经将<code>C/C++</code>代码打包成动态库，并且已经加载进虚拟机，此时我们可以向使用普通的java方法一样使用这个<code>native</code>函数。</p>
-<h3 id="2-知识点梳理"><a href="#2-知识点梳理" class="headerlink" title="2.知识点梳理"></a>2.知识点梳理</h3><p>上面的基本过程，其实就是很基本的<code>JNI</code>的基本知识，相信了解过<code>JNI</code>的人都清楚。相信大家实践一下，就可以实现一个demo了。下面我们来讲解一下这个案例所设计的基本知识点。</p>
-<h3 id="几个很重要的参数JNIEnv-env-jobject-jobject-jclass-jcls"><a href="#几个很重要的参数JNIEnv-env-jobject-jobject-jclass-jcls" class="headerlink" title="几个很重要的参数JNIEnv *env,jobject jobject,jclass jcls"></a>几个很重要的参数<code>JNIEnv *env</code>,<code>jobject jobject</code>,<code>jclass jcls</code></h3><p><code>Java</code>代码如何与<code>C/C++</code>代码进行通信,这正是我们的主角—&gt;<code>JNI</code>要解决的问题,我们发现每一个对应<code>Java</code>层方法的<code>C 函数</code>第一个参数都是<code>JNIEnv *env</code>这个参数，那么这个参数到底是什么呢？打开<code>jni.h</code>这个头文件，有人想问，这个头文件在哪？这个问题。。。好吧刚接触<code>JNI</code>的小白确实不知道，首先<code>Java</code>想要与<code>C/C++</code>通信，肯定是<code>Java</code>的工作，难不成还是<code>C/C++</code>的工作吗？知道了这个，我们很自然的想到<code>JDK</code>开发包，我们打开我们的<code>JDK</code>安装目录，里面有一个<code>include</code>目录，这个目录下就可以找到。<br>我们打开可以看到这样的代码：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">struct</span> JNINativeInterface_;</div><div class="line"><span class="keyword">struct</span> JNIEnv_;</div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> __cplusplus</span></div><div class="line"><span class="keyword">typedef</span> JNIEnv_ JNIEnv;</div><div class="line"><span class="meta">#<span class="meta-keyword">else</span></span></div><div class="line"><span class="keyword">typedef</span> <span class="keyword">const</span> <span class="keyword">struct</span> JNINativeInterface_ *JNIEnv;</div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></div></pre></td></tr></table></figure></p>
-<p>文件首先声明了两个结构体类型：然后使用宏定义来重新定义<code>JNIEnv</code>，我们可以看到<code>C</code>和<code>C++</code>里<code>JNIEnv</code>是不同的。有什么不同呢？这里我们先不讨论，我们目前是以<code>C</code>语法学习，后面我们会讲解和<code>C++</code>不同。<br>我们看到<code>JNIEnv</code>在<code>C</code>里面定义的原型是一个<code>JNINativeInterface_ *</code>是一个结构体指针，下面我们来简单的看看这个结构体到底是什么。<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">struct</span> JNINativeInterface_ &#123;</div><div class="line">    <span class="keyword">void</span> *reserved0;</div><div class="line">    <span class="keyword">void</span> *reserved1;</div><div class="line">    <span class="keyword">void</span> *reserved2;</div><div class="line"></div><div class="line">    <span class="keyword">void</span> *reserved3;</div><div class="line">    jint (JNICALL *GetVersion)(JNIEnv *env);</div><div class="line">    </div><div class="line">    jclass (JNICALL *DefineClass)</div><div class="line">    (JNIEnv *env, <span class="keyword">const</span> <span class="keyword">char</span> *name, jobject loader, <span class="keyword">const</span> jbyte *buf,</div><div class="line">       jsize len);</div><div class="line">        </div><div class="line">        ...</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>这个结构体定义的东西很多,对<code>C</code>不熟悉的人，咋一看感觉，有点复杂啊，其实，仔细想想，<code>C</code>的结构体里能翻什么大浪，无非就是定义一些变量嘛。前三个是指针变量，后面的呢？认真一瞅，唉。。。也是指针变量，是<code>函数指针变量</code>。<br>这么一来我们就似乎懂了，通过这个结构体，我们可以得到里面的函数指针，通过这个函数指针我们可以调用相关的函数。那么到底是什么函数呢？我就不卖关子了，这些函数正是我们<code>Java</code>和<code>C</code>相互调用的桥梁。是开发<code>java</code>虚拟机这帮大牛们帮我们实现的。</p>
-<p>我们发现，这里面提供很很多方法接口，它给我们提供了很多从<code>C</code>到<code>Java</code>或者从<code>java</code>到<code>C</code>的转换，通俗的来讲这就是一个<code>纽带</code></p>
-<p>这样我们就搞定了第一个参数：</p>
-<pre><code>`JNIEnv *env`：通过这个对象我们可以获取到很多从`C`到`Java`或者从`java`到`C`的转换
-</code></pre><p>第二个参数：<code>jobject</code>或<code>jclass</code>: 我们注意到这两个参数一般并不是同时出现的，那么这两个参数代表什么呢？我们仔细观察发现，当我们的<code>java native</code>方法是对象方法时，我们生成的对应的<code>native  code</code>第二个参数就是<code>jobject</code> 如果我们的方法是<code>static</code>时我们生成的<code>native code</code>就是<code>jclass</code>，想必大家其实已经猜到了，<code>jobject</code>就是我们调用这个方法时所属的对象。<code>jclass</code>其实就是这个静态方法所属的<code>Class</code>类。<br>这两个参数会十分有用，我们在后面会更加具体的讨论这个两个参数的作用和意义。</p>
-<p>本篇内容就到此为止了。接下来我们会具体的讨论，<code>JNIEnv *</code>里具体有哪些转换函数，以及<code>JNI</code>和<code>native code</code>，<code>java code</code>之间数据传递是如何转换的，学习这些的前提是先把本篇内容写一个<code>demo</code>出来，弄懂这<code>demo</code>所表达出来的知识内容。建议初学者使用<code>android studio 2.2</code>以上的实现这个demo，至于如何使用<code>Cmake</code>我们会有后续文章讲解。</p>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/03/02/Android NDK 编程指南（一）/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1087,7 +1068,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1096,7 +1077,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="NDK," />
 
 
 
@@ -87,25 +87,19 @@
 
 
 
-<meta name="description" content="Android NDK 编程指南（一）标签（空格分隔）： NDK
-
-前言一般的我们在开发Android应用程序时都是用Java语言开发, 但是随着业务要求的提高,纯Java平台可能会达到瓶颈,不同的功能模块如果考虑用其他语言实现可能会有更好的表现,甚至可以做到Java语言达不到的效果.
-本篇我们最开始部分来探讨Android平台下如何使用C/C++语言来开发Android应用。本篇的一系列文章都是">
+<meta name="description" content="前言一般的我们在开发Android应用程序时都是用Java语言开发, 但是随着业务要求的提高,纯Java平台可能会达到瓶颈,不同的功能模块如果考虑用其他语言实现可能会有更好的表现,甚至可以做到Java语言达不到的效果.
+本篇我们最开始部分来探讨Android平台下如何使用C/C++语言来开发Android应用。本篇的一系列文章都是自己在开发，学习过程中一点一滴的积累，也希望和广大技术爱好者一起交流">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Sivin">
+<meta property="og:title" content="Android NDK 编程指南（一）">
 <meta property="og:url" content="http://yoursite.com/2018/03/02/Android NDK 编程指南（一）/index.html">
 <meta property="og:site_name" content="Sivin">
-<meta property="og:description" content="Android NDK 编程指南（一）标签（空格分隔）： NDK
-
-前言一般的我们在开发Android应用程序时都是用Java语言开发, 但是随着业务要求的提高,纯Java平台可能会达到瓶颈,不同的功能模块如果考虑用其他语言实现可能会有更好的表现,甚至可以做到Java语言达不到的效果.
-本篇我们最开始部分来探讨Android平台下如何使用C/C++语言来开发Android应用。本篇的一系列文章都是">
-<meta property="og:updated_time" content="2018-03-02T02:24:30.282Z">
+<meta property="og:description" content="前言一般的我们在开发Android应用程序时都是用Java语言开发, 但是随着业务要求的提高,纯Java平台可能会达到瓶颈,不同的功能模块如果考虑用其他语言实现可能会有更好的表现,甚至可以做到Java语言达不到的效果.
+本篇我们最开始部分来探讨Android平台下如何使用C/C++语言来开发Android应用。本篇的一系列文章都是自己在开发，学习过程中一点一滴的积累，也希望和广大技术爱好者一起交流">
+<meta property="og:updated_time" content="2018-03-02T02:30:17.839Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Sivin">
-<meta name="twitter:description" content="Android NDK 编程指南（一）标签（空格分隔）： NDK
-
-前言一般的我们在开发Android应用程序时都是用Java语言开发, 但是随着业务要求的提高,纯Java平台可能会达到瓶颈,不同的功能模块如果考虑用其他语言实现可能会有更好的表现,甚至可以做到Java语言达不到的效果.
-本篇我们最开始部分来探讨Android平台下如何使用C/C++语言来开发Android应用。本篇的一系列文章都是">
+<meta name="twitter:title" content="Android NDK 编程指南（一）">
+<meta name="twitter:description" content="前言一般的我们在开发Android应用程序时都是用Java语言开发, 但是随着业务要求的提高,纯Java平台可能会达到瓶颈,不同的功能模块如果考虑用其他语言实现可能会有更好的表现,甚至可以做到Java语言达不到的效果.
+本篇我们最开始部分来探讨Android平台下如何使用C/C++语言来开发Android应用。本篇的一系列文章都是自己在开发，学习过程中一点一滴的积累，也希望和广大技术爱好者一起交流">
 
 
 
@@ -139,7 +133,7 @@
 
 
 
-  <title>  | Sivin </title>
+  <title> Android NDK 编程指南（一） | Sivin </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -300,7 +294,7 @@
             
             
               
-                
+                Android NDK 编程指南（一）
               
             
           </h1>
@@ -325,6 +319,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/NDK/" itemprop="url" rel="index">
+                    <span itemprop="name">NDK</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -351,10 +367,9 @@
       
 
       
-        <h1 id="Android-NDK-编程指南（一）"><a href="#Android-NDK-编程指南（一）" class="headerlink" title="Android NDK 编程指南（一）"></a>Android NDK 编程指南（一）</h1><p>标签（空格分隔）： NDK</p>
-<hr>
-<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>一般的我们在开发<code>Android</code>应用程序时都是用<code>Java</code>语言开发, 但是随着业务要求的提高,纯<code>Java</code>平台可能会达到瓶颈,不同的功能模块如果考虑用其他语言实现可能会有更好的表现,甚至可以做到<code>Java</code>语言达不到的效果.</p>
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>一般的我们在开发<code>Android</code>应用程序时都是用<code>Java</code>语言开发, 但是随着业务要求的提高,纯<code>Java</code>平台可能会达到瓶颈,不同的功能模块如果考虑用其他语言实现可能会有更好的表现,甚至可以做到<code>Java</code>语言达不到的效果.</p>
 <p>本篇我们最开始部分来探讨<code>Android</code>平台下如何使用<code>C/C++</code>语言来开发<code>Android</code>应用。本篇的一系列文章都是自己在开发，学习过程中一点一滴的积累，也希望和广大技术爱好者一起交流，共同促进技术的提升，如有不正确的地方，或者有欠缺的地方欢迎大家不吝赐教。</p>
+<a id="more"></a>
 <p>总体分两部分:</p>
 <blockquote>
 <ul>
@@ -418,6 +433,12 @@
 
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/NDK/" rel="tag"># NDK</a>
+          
+        </div>
       
 
       
@@ -515,7 +536,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -524,7 +545,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -584,7 +605,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Android-NDK-编程指南（一）"><span class="nav-number">1.</span> <span class="nav-text">Android NDK 编程指南（一）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.0.1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是JNI"><span class="nav-number">1.0.2.</span> <span class="nav-text">什么是JNI?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用JNI开发的流程"><span class="nav-number">1.0.3.</span> <span class="nav-text">使用JNI开发的流程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1声明本地方法"><span class="nav-number">1.0.3.1.</span> <span class="nav-text">1.1声明本地方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2获取头文件"><span class="nav-number">1.0.3.2.</span> <span class="nav-text">1.2获取头文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-4-Java代码中加载共享库"><span class="nav-number">1.0.3.3.</span> <span class="nav-text">1.4 Java代码中加载共享库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-5-Java代码中使用这个native-方法"><span class="nav-number">1.0.3.4.</span> <span class="nav-text">1.5 Java代码中使用这个native 方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-知识点梳理"><span class="nav-number">1.0.4.</span> <span class="nav-text">2.知识点梳理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#几个很重要的参数JNIEnv-env-jobject-jobject-jclass-jcls"><span class="nav-number">1.0.5.</span> <span class="nav-text">几个很重要的参数JNIEnv *env,jobject jobject,jclass jcls</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是JNI"><span class="nav-number">2.</span> <span class="nav-text">什么是JNI?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用JNI开发的流程"><span class="nav-number">3.</span> <span class="nav-text">使用JNI开发的流程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1声明本地方法"><span class="nav-number">3.1.</span> <span class="nav-text">1.1声明本地方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2获取头文件"><span class="nav-number">3.2.</span> <span class="nav-text">1.2获取头文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-4-Java代码中加载共享库"><span class="nav-number">3.3.</span> <span class="nav-text">1.4 Java代码中加载共享库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-5-Java代码中使用这个native-方法"><span class="nav-number">3.4.</span> <span class="nav-text">1.5 Java代码中使用这个native 方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-知识点梳理"><span class="nav-number">4.</span> <span class="nav-text">2.知识点梳理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#几个很重要的参数JNIEnv-env-jobject-jobject-jclass-jcls"><span class="nav-number">5.</span> <span class="nav-text">几个很重要的参数JNIEnv *env,jobject jobject,jclass jcls</span></a></li></ol></div>
             
 
           </div>
